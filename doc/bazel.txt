@@ -1,0 +1,27 @@
+*bazel.txt*	Bazel vim integration (bazel.io)
+Google                                                                 *bazel*
+
+==============================================================================
+CONTENTS                                                      *bazel-contents*
+  1. Configuration..............................................|bazel-config|
+  2. Commands.................................................|bazel-commands|
+
+==============================================================================
+CONFIGURATION                                                   *bazel-config*
+
+This plugin uses maktaba flags for configuration. Install Glaive
+(https://github.com/google/glaive) and use the |:Glaive| command to configure
+them.
+
+                                                      *bazel:plugin[commands]*
+Configures whether plugin/commands.vim should be loaded.
+Default: 1 `
+
+==============================================================================
+COMMANDS                                                      *bazel-commands*
+
+:Bazel [command] [target_or_flag...]                                  *:Bazel*
+  Supports tab completion.
+
+
+vim:tw=78:ts=8:ft=help:norl:

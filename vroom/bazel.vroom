@@ -1,0 +1,15 @@
+In order for these tests to work, maktaba MUST be in the same parent directory
+as bazel. Given that that's the case, all we have to do is source the
+setupvroom.vim file, which bootstraps the bazel plugin and configures it to
+work properly under vroom.
+
+  :source $VROOMDIR/setupvroom.vim
+
+The main command this plugin provides is :Bazel, which drops to a shell and
+invokes bazel in the foreground, leaving output visible with a "Press ENTER"
+prompt until explicitly dismissed.
+
+  :Bazel info
+  ! bazel info
+  $ workspace: /some/path
+  > <CR>
