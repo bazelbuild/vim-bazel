@@ -1,6 +1,7 @@
 {
   "name": "bazel",
   "description": "Bazel vim integration (bazel.io)",
+  "version": "0.0.1",
   "author": "Google",
   "repository": {"type": "git", "url": "git://github.com/bazelbuild/vim-bazel"},
   "dependencies": {
