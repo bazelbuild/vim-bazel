@@ -3,8 +3,14 @@ Google                                                                 *bazel*
 
 ==============================================================================
 CONTENTS                                                      *bazel-contents*
-  1. Configuration..............................................|bazel-config|
-  2. Commands.................................................|bazel-commands|
+  1. Introduction................................................|bazel-intro|
+  2. Configuration..............................................|bazel-config|
+  3. Commands.................................................|bazel-commands|
+
+==============================================================================
+INTRODUCTION                                                     *bazel-intro*
+
+This plugin allows you to execute bazel from vim.
 
 ==============================================================================
 CONFIGURATION                                                   *bazel-config*
@@ -21,6 +27,9 @@ Default: 1 `
 COMMANDS                                                      *bazel-commands*
 
 :Bazel [command] [target_or_flag...]                                  *:Bazel*
+  Invokes bazel in the foreground, leaving output visible with a "Press ENTER"
+  prompt until explicitly dismissed.
+
   Supports tab completion.
 
 
