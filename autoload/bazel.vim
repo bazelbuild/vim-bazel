@@ -5,10 +5,22 @@ if !exists('s:bash_completion_path')
 endif
 
 ""
+" Write all changed buffers if 'autowrite' or 'autowriteall' is enabled.
+" This is used before issuing bazel shell commands to avoid building stale
+" versions of the code. The 'autowrite' and 'autowriteall' options control the
+" behavior of |:make|, so it's natural for |:Bazel| to respect them as well.
+function! s:Autowrite() abort
+  if &autowrite || &autowriteall
+    wall
+  endif
+endfunction
+
+""
 " Executes a bazel command with {arguments}.
 function! bazel#Run(arguments) abort
   call s:PLUGIN.logger.Info(
       \ 'Invoking bazel with arguments "%s"', string(a:arguments))
+  call s:Autowrite()
   let l:syscall = maktaba#syscall#Create(['bazel'] + a:arguments)
   call l:syscall.CallForeground(1, 0)
   " Note: Intentionally doesn't check v:shell_error.
