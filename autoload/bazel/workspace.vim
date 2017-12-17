@@ -1,9 +1,17 @@
 ""
 " @section Introduction, intro
 " @library
-" Implements common functionality used by bazel-related plugins.  For more
-" details about Build file structure/terminology, see:
+" Implements common path functionality used by bazel-related plugins.  For
+" more details about Build file structure/terminology, see:
 " https://bazel.build/versions/master/docs/build-ref.html
+
+""
+" @private
+" Returns the root path for a Bazel workspace file (given the current working
+" directory). {path} is the absolute path.
+function! bazel#workspace#GetBazelRootForCwd() abort
+  return bazel#workspace#GetBazelRootPath(getcwd())
+endfunction
 
 
 ""
@@ -13,23 +21,16 @@
 " I.e., if you are in directory: /Users/$USER/myproject/foo/bar/biff
 " And there is a WORKSPACE file at: /Users/$USER/myproject/WORKSPACE
 " Return /home/$USER/myproject. If no workspace can be found, return ''
-function! bazel#lib#GetBazelRootPath(path) abort
+function! bazel#workspace#GetBazelRootPath(path) abort
   let l:path = s:AbsoluteDirectoryPath(a:path)
   if empty(l:path)
     return l:path
   endif
-  let l:components = maktaba#path#Split(path)
-  let l:working = ''
-  let l:workspace_path = ''
-  for l:comp in l:components
-    let l:working = maktaba#path#Join([l:working, l:comp])
-    let l:test_path = maktaba#path#Join([l:working, 'WORKSPACE'])
-    if filereadable(l:test_path)
-      let l:workspace_path = l:test_path
-      break
-    endif
-  endfor
-  return l:workspace_path
+  let l:file = findfile('WORKSPACE', '.;')
+  if !empty(l:file)
+    return fnamemodify(l:file, ':p')
+  endif
+  return ''
 endfunction
 
 
@@ -45,8 +46,5 @@ function! s:AbsoluteDirectoryPath(path) abort
     " interpolate it.
     return ''
   endif
-  if !isdirectory(l:path)
-    let l:path = fnamemodify(l:path, ':h')
-  endif
-  return maktaba#path#Join([l:path, ''])
+  return maktaba#path#AsDir(l:path)
 endfunction

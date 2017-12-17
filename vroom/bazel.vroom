@@ -9,7 +9,6 @@ The main command this plugin provides is :Bazel, which drops to a shell and
 invokes bazel in the foreground, leaving output visible with a "Press ENTER"
 prompt until explicitly dismissed.
 
-  :Bazel info
+  :Bazel info <CR>
   ! bazel info
   $ workspace: /some/path
-  > <CR>
