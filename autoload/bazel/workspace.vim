@@ -28,7 +28,8 @@ function! bazel#workspace#GetBazelRootPath(path) abort
   endif
   let l:file = findfile('WORKSPACE', '.;')
   if !empty(l:file)
-    return fnamemodify(l:file, ':p')
+    " Get the absolute path and strip 'WORKSPACE'
+    return fnamemodify(l:file, ':p:h')
   endif
   return ''
 endfunction

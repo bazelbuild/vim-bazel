@@ -7,7 +7,7 @@ Test that we can accurately find the WORKSPACE file.
 
   :cd $VROOMDIR/fixture
   :echomsg bazel#workspace#GetBazelRootForCwd()
-  ~ .*/WORKSPACE (regex)
+  ~ .*/fixture$ (regex)
 
 An empty str should be returned if no workspace file is found
 
@@ -18,7 +18,7 @@ An empty str should be returned if no workspace file is found
 Passing an explicit bazel root path should also work.
 
   :echomsg bazel#workspace#GetBazelRootPath($VROOMDIR . '/fixture')
-  ~ .*/WORKSPACE (regex)
+  ~ .*/figure$ (regex)
 
   :echomsg bazel#workspace#GetBazelRootPath($VROOMDIR)
   ~ ^$ (regex)
