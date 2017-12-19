@@ -7,15 +7,6 @@
 
 ""
 " @private
-" Returns the root path for a Bazel workspace file (given the current working
-" directory). {path} is the absolute path.
-function! bazel#workspace#GetBazelRootForCwd() abort
-  return bazel#workspace#GetBazelRootPath(getcwd())
-endfunction
-
-
-""
-" @private
 " Returns the root path for Bazel workspace. {path} is the absolute path.
 "
 " I.e., if you are in directory: /Users/$USER/myproject/foo/bar/biff
@@ -30,7 +21,7 @@ function! bazel#workspace#GetBazelRootPath(path) abort
   if !empty(l:file)
     " Get the absolute path and strip 'WORKSPACE'
     return fnamemodify(l:file, ':p:h')
-  endif
+  else
   return ''
 endfunction
 
