@@ -15,14 +15,16 @@
 function! bazel#workspace#GetBazelRootPath(path) abort
   let l:path = s:AbsoluteDirectoryPath(a:path)
   if empty(l:path)
-    return l:path
+    throw maktaba#error#NotFound('No workspace found')
   endif
-  let l:file = findfile('WORKSPACE', '.;')
+  " Search upward for WORKSPACE.
+  let l:file = findfile('WORKSPACE', l:path . ';')
   if !empty(l:file)
     " Get the absolute path and strip 'WORKSPACE'
     return fnamemodify(l:file, ':p:h')
   else
-  return ''
+    throw maktaba#error#NotFound('No workspace found')
+  endif
 endfunction
 
 
