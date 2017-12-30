@@ -1,0 +1,21 @@
+Bootstrap testing
+
+  :source $VROOMDIR/setupvroom.vim
+
+
+Test that we can accurately find the WORKSPACE file.
+
+  :echomsg bazel#workspace#GetBazelRootPath($VROOMDIR . '/workspace-fixture')
+  ~ .*/workspace-fixture$ (regex)
+
+An error should be thrown if no workspace file is found
+
+  :let g:bzlfn = maktaba#function#Create('bazel#workspace#GetBazelRootPath')
+  :call maktaba#error#Try(g:bzlfn.WithArgs($VROOMDIR))
+  ~ ERROR(NotFound): No workspace found
+
+An error should be thrown if an invalid path is passed in
+
+  :let g:bzlfn = maktaba#function#Create('bazel#workspace#GetBazelRootPath')
+  :call maktaba#error#Try(g:bzlfn.WithArgs(''))
+  ~ ERROR(BadValue): Empty path
