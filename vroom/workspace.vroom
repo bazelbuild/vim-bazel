@@ -18,4 +18,4 @@ An error should be thrown if an invalid path is passed in
 
   :let g:bzlfn = maktaba#function#Create('bazel#workspace#GetBazelRootPath')
   :call maktaba#error#Try(g:bzlfn.WithArgs(''))
-  ~ ERROR(InvalidArguments): Empty path
+  ~ ERROR(BadValue): Empty path

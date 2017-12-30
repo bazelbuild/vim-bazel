@@ -15,7 +15,7 @@
 function! bazel#workspace#GetBazelRootPath(path) abort
   let l:path = s:AbsoluteDirectoryPath(a:path)
   if empty(l:path)
-    throw maktaba#error#InvalidArguments('Empty path')
+    throw maktaba#error#BadValue('Empty path')
   endif
   " Search upward for WORKSPACE.
   let l:file = findfile('WORKSPACE', l:path . ';')
