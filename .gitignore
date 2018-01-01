@@ -1,1 +1,16 @@
+# OSX
+.DS_Store
+
+# Backup Files
+*~
+
+# Vim swap files
+*.swp
+*.swo
+
+# Vim tags
 /doc/tags
+
+# Ignore all bazel-* symlinks. There is no full list since this can change
+# based on the name of the directory bazel is cloned into.
+/bazel-*
