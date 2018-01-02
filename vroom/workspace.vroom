@@ -8,6 +8,10 @@ Test that we can accurately find the WORKSPACE file.
   :echomsg bazel#workspace#GetBazelRootPath($VROOMDIR . '/workspace-fixture')
   ~ .*/workspace-fixture$ (regex)
 
+  :echomsg bazel#workspace#GetBazelRootPath($VROOMDIR .
+  |'/bazelbuild-examples/cpp-tutorial/stage1/main')
+  ~ .*/bazelbuild-examples/cpp-tutorial/stage1$ (regex)
+
 An error should be thrown if no workspace file is found
 
   :let g:bzlfn = maktaba#function#Create('bazel#workspace#GetBazelRootPath')
