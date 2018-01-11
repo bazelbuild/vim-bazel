@@ -1,6 +1,13 @@
+# Vim Bazel
+
 vim-bazel is a plugin for invoking bazel and interacting with bazel artifacts.
 
-It's currently in early development (see [Development status](#development-status)).
+If you're looking for the Syntax and Filetype settings, that lives in
+[vim-ft-bzl](https://github.com/bazelbuild/vim-ft-bzl) and has been integrated
+directly into the core-Vim syntax and filetype configuration.
+
+Vim-bazel is currently in early development (see [Development
+status](#development-status)).
 
 For details, see the executable documentation in the `vroom/` directory or the
 helpfiles in the `doc/` directory. The helpfiles are also available via
@@ -8,11 +15,11 @@ helpfiles in the `doc/` directory. The helpfiles are also available via
 
 DISCLAIMER: This is not an official Google product.
 
-# Commands
+## Commands
 
 Use `:Bazel {command} [argument...]` to invoke bazel.
 
-# Usage example
+## Usage example
 
 ```vim
 :Bazel build //some/package:sometarget
@@ -26,7 +33,7 @@ INFO: Elapsed time: 19.443s, Critical Path: 13.79s
 Press ENTER or type command to continue
 ```
 
-# Installation
+## Installation
 
 This example uses [vim-plug](https://github.com/junegunn/vim-plug), whose
 plugin-adding command is `Plug`.
