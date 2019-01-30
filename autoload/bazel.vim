@@ -30,7 +30,7 @@ function! bazel#Run(arguments) abort
     set errorformat+=%-GLoading:\ %.%#
     set errorformat+=%-G[%.%#
 
-    execute "set makeprg=bazel\\ build\\" join(a:arguments[1:100])
+    execute "set makeprg=bazel\\ build\\" substitute(join(a:arguments[1:100]), ' ', '\\ ', 'g')
     make
   else
     let l:syscall = maktaba#syscall#Create(['bazel'] + a:arguments)
