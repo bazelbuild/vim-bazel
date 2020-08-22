@@ -57,11 +57,20 @@ Start vim and run
 
 Major missing features:
 
- * Import build errors into vim (#1)
- * Asynchronous build support (#2)
+ * Import build errors into vim ([#1][i1], see note below)
+ * Asynchronous build support ([#2][i2])
 
 See the full list of open issues at
 https://github.com/bazelbuild/vim-bazel/issues.
+
+NOTE: If you're eager for some basic form of jump-to-error support and
+comfortable making some local modifications to the plugin to customize,
+you can try patching [#11][pr11]. Follow up on [#1][i1] if you're interested in
+getting maintainable jump-to-file functionality incorporated into the plugin.
+
+[i1]: https://github.com/bazelbuild/vim-bazel/issues/1
+[i2]: https://github.com/bazelbuild/vim-bazel/issues/2
+[pr11]: https://github.com/bazelbuild/vim-bazel/pull/11
 
 # FAQ
 
