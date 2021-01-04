@@ -1,3 +1,8 @@
+""
+" @section Functions, functions
+" The plugin provides a few helper functions to be used in custom integrations
+" and specialized user configuration.
+
 let s:PLUGIN = maktaba#plugin#Get('bazel')
 
 if !exists('s:bash_completion_path')
@@ -16,12 +21,51 @@ function! s:Autowrite() abort
 endfunction
 
 ""
-" Executes a bazel command with {arguments}.
-function! bazel#Run(arguments) abort
+" Check {config} for @function(#Run) and warn for unrecognized config keys.
+function! s:ValidateRunConfig(config) abort
+  call maktaba#ensure#IsDict(a:config)
+  " Verify no unexpected config keys.
+  let l:expected_keys = ['executable']
+  let l:unexpected_keys =
+      \ filter(keys(a:config), 'index(l:expected_keys, v:val) < 0')
+  if !empty(l:unexpected_keys)
+    call s:PLUGIN.logger.Warn(
+        \ 'Unexpected keys %s in bazel#Run config %s',
+        \ string(l:unexpected_keys),
+        \ string(a:config))
+  endif
+  return a:config
+endfunction
+
+
+""
+" @public
+" Executes a bazel command with {arguments} and optional [config].
+"
+" [config] currently accepts a key "executable" to override the default
+" executable of "bazel" (example: `{'executable': 'blaze'}`).
+"
+" Normally this is invoked by the |:Bazel| command. It's available as a
+" function so it can be used in custom plugin integrations and commands. For
+" example, this config defines a command to invoke an alternate bazel
+" executable: >
+"   command -nargs=* -complete=customlist,bazel#CompletionList Blaze
+"       \ call bazel#Run([<f-args>], {'executable': 'blaze'})
+" <
+function! bazel#Run(arguments, ...) abort
+  let l:config = {}
+  if has_key(a:, 1)
+    call extend(l:config, s:ValidateRunConfig(a:1))
+  endif
   call s:PLUGIN.logger.Info(
-      \ 'Invoking bazel with arguments "%s"', string(a:arguments))
+      \ 'Invoking bazel with arguments "%s" and config %s',
+      \ string(a:arguments),
+      \ string(l:config))
   call s:Autowrite()
-  let l:syscall = maktaba#syscall#Create(['bazel'] + a:arguments)
+  " TODO: Handle executable with spaces such as "bazel --bazelrc=foo".
+  let l:executable = get(l:config, 'executable', 'bazel')
+
+  let l:syscall = maktaba#syscall#Create([l:executable] + a:arguments)
   call l:syscall.CallForeground(1, 0)
   " Note: Intentionally doesn't check v:shell_error.
   " Errors are printed on console by bazel, and visible until explicitly
@@ -29,8 +73,10 @@ function! bazel#Run(arguments) abort
 endfunction
 
 ""
-" Completions for the :Bazel command. Completions are extracted from the bash
-" bazel completion function.
+" @public
+" Completions for the |:Bazel| command and similar custom commands.
+"
+" Completions are extracted from the bash bazel completion function.
 function! bazel#CompletionList(unused_arg, line, pos) abort
   " The bash complete script does not truly support autocompleting within a
   " word, return nothing here rather than returning bad suggestions.
@@ -38,6 +84,8 @@ function! bazel#CompletionList(unused_arg, line, pos) abort
     return []
   endif
 
+  " NOTE: The command name is hard-coded to "bazel", so it won't provide
+  " perfect completion suggestions if used for custom alternate commands.
   let l:cmd = substitute(a:line[0:a:pos], '\v\w+', 'bazel', '')
 
   let l:comp_words = split(l:cmd, '\v\s+')
