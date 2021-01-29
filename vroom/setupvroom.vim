@@ -15,8 +15,12 @@
 " This file is used from vroom scripts to bootstrap the bazel plugin and
 " configure it to work properly under vroom.
 
-" Codereview does not support compatible mode.
+" Bazel does not support compatible mode.
 set nocompatible
+
+" Set cmdheight to avoid getting stuck at "Hit ENTER to continue" prompts,
+" particularly in neovim mode.
+set cmdheight=5
 
 " Install maktaba from local dir.
 let s:repo = expand('<sfile>:p:h:h')
