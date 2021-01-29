@@ -12,3 +12,12 @@ prompt until explicitly dismissed.
   :Bazel info <CR>
   ! bazel info
   $ workspace: /some/path
+
+
+For advanced usage scenarios, it can also be invoked via the bazel#Run function,
+which allows some custom configuration to be passed to the invocation. You can
+use it to invoke an alternate executable name.
+
+  :call bazel#Run(['info'], {'executable': 'blaze'}) <CR>
+  ! blaze info
+  $ workspace: /some/path

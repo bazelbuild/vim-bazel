@@ -1,8 +1,5 @@
-""
-" @section Introduction, intro
-" @library
-" Implements common path functionality used by bazel-related plugins.  For
-" more details about Build file structure/terminology, see:
+" Common path functionality used by bazel-related plugins.  For more details
+" about Build file structure/terminology, see:
 " https://bazel.build/versions/master/docs/build-ref.html
 
 ""

@@ -6,6 +6,7 @@ CONTENTS                                                      *bazel-contents*
   1. Introduction................................................|bazel-intro|
   2. Configuration..............................................|bazel-config|
   3. Commands.................................................|bazel-commands|
+  4. Functions...............................................|bazel-functions|
 
 ==============================================================================
 INTRODUCTION                                                     *bazel-intro*
@@ -34,6 +35,32 @@ COMMANDS                                                      *bazel-commands*
   bazel is invoked.
 
   Supports tab completion.
+
+==============================================================================
+FUNCTIONS                                                    *bazel-functions*
+
+The plugin provides a few helper functions to be used in custom integrations
+and specialized user configuration.
+
+bazel#Run({arguments}, [config])                                 *bazel#Run()*
+  Executes a bazel command with {arguments} and optional [config].
+
+  [config] currently accepts a key "executable" to override the default
+  executable of "bazel" (example: `{'executable': 'blaze'}`).
+
+  Normally this is invoked by the |:Bazel| command. It's available as a
+  function so it can be used in custom plugin integrations and commands. For
+  example, this config defines a command to invoke an alternate bazel
+  executable:
+>
+    command -nargs=* -complete=customlist,bazel#CompletionList Blaze
+        \ call bazel#Run([<f-args>], {'executable': 'blaze'})
+<
+
+bazel#CompletionList({unused_arg}, {line}, {pos})     *bazel#CompletionList()*
+  Completions for the |:Bazel| command and similar custom commands.
+
+  Completions are extracted from the bash bazel completion function.
 
 
 vim:tw=78:ts=8:ft=help:norl:
