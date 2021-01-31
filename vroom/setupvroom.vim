@@ -22,24 +22,12 @@ set nocompatible
 " particularly in neovim mode.
 set cmdheight=5
 
-" Install maktaba from local dir.
-let s:repo = expand('<sfile>:p:h:h')
-let s:search_dir = fnamemodify(s:repo, ':h')
-" We'd like to use maktaba#path#Join, but maktaba doesn't exist yet.
-let s:slash = exists('+shellslash') && !&shellslash ? '\' : '/'
-for s:plugin_dirname in ['maktaba', 'vim-maktaba']
-  let s:bootstrap_path = join([s:search_dir, s:plugin_dirname, 'bootstrap.vim'],
-      \ s:slash)
-  if filereadable(s:bootstrap_path)
-    execute 'source' s:bootstrap_path
-    break
-  endif
-endfor
-
-" Install the bazel plugin.
-call maktaba#plugin#GetOrInstall(s:repo)
+" Install bazel plugin and its dependencies.
+let s:repo = fnamemodify($VROOMDIR, ':p:h:h')
+execute 'source' s:repo . '/bootstrap.vim'
 
 " Install Glaive from local dir.
+let s:search_dir = fnamemodify(s:repo, ':h')
 for s:plugin_dirname in ['glaive', 'vim-glaive']
   let s:bootstrap_path =
       \ maktaba#path#Join([s:search_dir, s:plugin_dirname, 'bootstrap.vim'])
