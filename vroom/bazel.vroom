@@ -9,15 +9,20 @@ The main command this plugin provides is :Bazel, which drops to a shell and
 invokes bazel in the foreground, leaving output visible with a "Press ENTER"
 prompt until explicitly dismissed.
 
-  :Bazel info <CR>
+  :Bazel info <CR> (0.5s)
   ! bazel info
   $ workspace: /some/path
+
+Note: If it looks strange, the <CR> above is to dismiss the "Press ENTER"
+prompt. The extra 0.5s delay avoids failures that can happen in certain
+configurations (see
+https://github.com/google/vroom/issues/2#issuecomment-770320120).
 
 
 For advanced usage scenarios, it can also be invoked via the bazel#Run function,
 which allows some custom configuration to be passed to the invocation. You can
 use it to invoke an alternate executable name.
 
-  :call bazel#Run(['info'], {'executable': 'blaze'}) <CR>
+  :call bazel#Run(['info'], {'executable': 'blaze'}) <CR> (0.5s)
   ! blaze info
   $ workspace: /some/path
