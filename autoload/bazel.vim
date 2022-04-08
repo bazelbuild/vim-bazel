@@ -6,7 +6,11 @@
 let s:PLUGIN = maktaba#plugin#Get('bazel')
 
 if !exists('s:bash_completion_path')
-  let s:bash_completion_path = '/etc/bash_completion.d/bazel'
+  if filereadable('/etc/bash_completion.d/bazel')
+      let s:bash_completion_path = '/etc/bash_completion.d/bazel'
+  else
+      let s:bash_completion_path = '/etc/bash_completion.d/bazel-complete.bash'
+  endif
 endif
 
 ""
